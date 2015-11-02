@@ -1,0 +1,380 @@
+name: Kotlin
+scopeName: source.Kotlin
+repository:
+ classes:
+  multi:
+   begin: (?=\s*(?:companion|class|object|trait))
+   end: }|(?=$)
+   patterns:
+    multi:
+     begin: \b(companion\s+)?(class|object|trait)\b
+     bcaps: 1=keyword.other.kotlin 2=keyword.other.kotlin
+     end: (?=[<{(:])
+     patterns:
+      single:
+       name: keyword.other.kotlin
+       pattern: \b(object)\b
+      single:
+       name: entity.name.type.class.kotlin
+       pattern: \w+
+    multi:
+     begin: <
+     end: >
+     patterns:
+      include: #generics
+    multi:
+     begin: \(
+     end: \)
+     patterns:
+      include: #parameters
+    multi:
+     begin: (:)
+     bcaps: 1=keyword.operator.declaration.kotlin
+     end: (?=[{$])
+     patterns:
+      single:
+       name: entity.other.inherited-class.kotlin
+       pattern: \w+
+      multi:
+       begin: \(
+       end: \)
+       patterns:
+        include: #expressions
+    multi:
+     begin: \{
+     end: \}
+     patterns:
+      include: #statements
+ comments:
+  multi:
+   name: comment.block.kotlin
+   begin: /\*
+   bcaps: 0=punctuation.definition.comment.kotlin
+   end: \*/
+   ecaps: 0=punctuation.definition.comment.kotlin
+  single:
+   pattern: \s*((//).*$\n?)
+   caps: 1=comment.line.double-slash.kotlin 2=punctuation.definition.comment.kotlin
+ constants:
+  single:
+   name: constant.language.kotlin
+   pattern: \b(true|false|null|this|super)\b
+  single:
+   name: constant.numeric.kotlin
+   pattern: \b((0(x|X)[0-9a-fA-F]*)|(([0-9]+\.?[0-9]*)|(\.[0-9]+))((e|E)(\+|-)?[0-9]+)?)([LlFfUuDd]|UL|ul)?\b
+  single:
+   name: constant.other.kotlin
+   pattern: \b([A-Z][A-Z0-9_]+)\b
+ expressions:
+  multi:
+   begin: \(
+   end: \)
+   patterns:
+    include: #expressions
+  include: #types
+  include: #strings
+  include: #constants
+  include: #comments
+  include: #keywords
+ functions:
+  multi:
+   begin: (?=\s*(?:fun))
+   end: }|(?=$)
+   patterns:
+    multi:
+     begin: \b(fun)\b
+     bcaps: 1=keyword.other.kotlin
+     end: (?=\()
+     patterns:
+      multi:
+       begin: <
+       end: >
+       patterns:
+        include: #generics
+      single:
+       pattern: ([\.<\?>\w]+\.)?(\w+)
+       caps: 2=entity.name.function.kotlin
+    multi:
+     begin: \(
+     end: \)
+     patterns:
+      include: #parameters
+    multi:
+     begin: (:)
+     bcaps: 1=keyword.operator.declaration.kotlin
+     end: (?=[{=$])
+     patterns:
+      include: #types
+    multi:
+     begin: \{
+     end: (?=\})
+     patterns:
+      include: #statements
+    multi:
+     begin: (=)
+     bcaps: 1=keyword.operator.assignment.kotlin
+     end: (?=$)
+     patterns:
+      include: #expressions
+ generics:
+  multi:
+   begin: (:)
+   bcaps: 1=keyword.operator.declaration.kotlin
+   end: (?=,|>)
+   patterns:
+    include: #types
+  include: #keywords
+  single:
+   name: storage.type.generic.kotlin
+   pattern: \w+
+ getters-and-setters:
+  multi:
+   begin: \b(get)\b\s*\(\s*\)
+   bcaps: 1=entity.name.function.kotlin
+   end: \}|(?=\bset\b)|$
+   patterns:
+    multi:
+     begin: (=)
+     bcaps: 1=keyword.operator.assignment.kotlin
+     end: (?=$|\bset\b)
+     patterns:
+      include: #expressions
+    multi:
+     begin: \{
+     end: \}
+     patterns:
+      include: #expressions
+  multi:
+   begin: \b(set)\b\s*(?=\()
+   bcaps: 1=entity.name.function.kotlin
+   end: \}|(?=\bget\b)|$
+   patterns:
+    multi:
+     begin: \(
+     end: \)
+     patterns:
+      include: #parameters
+    multi:
+     begin: (=)
+     bcaps: 1=keyword.operator.assignment.kotlin
+     end: (?=$|\bset\b)
+     patterns:
+      include: #expressions
+    multi:
+     begin: \{
+     end: \}
+     patterns:
+      include: #expressions
+ imports:
+  single:
+   pattern: ^\s*(import)\s+[^ $]+(\s+(as))?
+   caps: 1=keyword.other.kotlin 3=keyword.other.kotlin
+ keywords:
+  single:
+   name: storage.modifier.kotlin
+   pattern: \b(var|val|public|private|protected|abstract|final|enum|open|attribute|annotation|override|inline|var|val|vararg|lazy|in|out|ref|internal|data)\b
+  single:
+   name: keyword.control.catch-exception.kotlin
+   pattern: \b(try|catch|finally|throw)\b
+  single:
+   name: keyword.control.kotlin
+   pattern: \b(if|then|else|while|for|do|return|when|where|break|continue)\b
+  single:
+   name: keyword.operator.kotlin
+   pattern: \b(in|is|as|assert)\b
+  single:
+   name: keyword.operator.comparison.kotlin
+   pattern: (==|!=|<=|>=|<>|<|>)
+  single:
+   name: keyword.operator.assignment.kotlin
+   pattern: (=)
+  single:
+   name: keyword.operator.declaration.kotlin
+   pattern: (:)
+  single:
+   name: keyword.operator.dot.kotlin
+   pattern: (\.)
+  single:
+   name: keyword.operator.increment-decrement.kotlin
+   pattern: (\-\-|\+\+)
+  single:
+   name: keyword.operator.arithmetic.kotlin
+   pattern: (\-|\+|\*|\/|%)
+  single:
+   name: keyword.operator.logical.kotlin
+   pattern: (!|&&|\|\|)
+  single:
+   name: keyword.operator.tuple.kotlin
+   pattern: (#)
+  single:
+   name: punctuation.terminator.kotlin
+   pattern: (;)
+ namespaces:
+  single:
+   name: keyword.other.kotlin
+   pattern: \b(namespace)\b
+  multi:
+   begin: \{
+   end: \}
+   patterns:
+    include: #statements
+ parameters:
+  multi:
+   begin: (:)
+   bcaps: 1=keyword.operator.declaration.kotlin
+   end: (?=,|\)|=)
+   patterns:
+    include: #types
+  multi:
+   begin: (=)
+   bcaps: 1=keyword.operator.declaration.kotlin
+   end: (?=,|\))
+   patterns:
+    include: #expressions
+  include: #keywords
+  single:
+   name: variable.parameter.function.kotlin
+   pattern: \w+
+ statements:
+  include: #namespaces
+  include: #typedefs
+  include: #classes
+  include: #functions
+  include: #variables
+  include: #getters-and-setters
+  include: #expressions
+ strings:
+  multi:
+   name: string.quoted.third.kotlin
+   begin: """
+   bcaps: 0=punctuation.definition.string.begin.kotlin
+   end: """
+   ecaps: 0=punctuation.definition.string.end.kotlin
+   patterns:
+    single:
+     name: variable.parameter.template.kotlin
+     pattern: (\$\w+|\$\{[^\}]+\})
+    single:
+     name: constant.character.escape.kotlin
+     pattern: \\.
+  multi:
+   name: string.quoted.double.kotlin
+   begin: "
+   bcaps: 0=punctuation.definition.string.begin.kotlin
+   end: "
+   ecaps: 0=punctuation.definition.string.end.kotlin
+   patterns:
+    single:
+     name: variable.parameter.template.kotlin
+     pattern: (\$\w+|\$\{[^\}]+\})
+    single:
+     name: constant.character.escape.kotlin
+     pattern: \\.
+  multi:
+   name: string.quoted.single.kotlin
+   begin: '
+   bcaps: 0=punctuation.definition.string.begin.kotlin
+   end: '
+   ecaps: 0=punctuation.definition.string.end.kotlin
+   patterns:
+    single:
+     name: constant.character.escape.kotlin
+     pattern: \\.
+  multi:
+   name: string.quoted.single.kotlin
+   begin: `
+   bcaps: 0=punctuation.definition.string.begin.kotlin
+   end: `
+   ecaps: 0=punctuation.definition.string.end.kotlin
+ typedefs:
+  multi:
+   begin: (?=\s*(?:type))
+   end: (?=$)
+   patterns:
+    single:
+     name: keyword.other.kotlin
+     pattern: \b(type)\b
+    multi:
+     begin: <
+     end: >
+     patterns:
+      include: #generics
+    include: #expressions
+ types:
+  single:
+   name: storage.type.buildin.kotlin
+   pattern: \b(Any|Unit|String|Int|Boolean|Char|Long|Double|Float|Short|Byte)\b
+  single:
+   name: storage.type.buildin.array.kotlin
+   pattern: \b(IntArray|BooleanArray|CharArray|LongArray|DoubleArray|FloatArray|ShortArray|ByteArray)\b
+  multi:
+   begin: \b(Array|List|Map)<\b
+   bcaps: 1=storage.type.buildin.collection.kotlin
+   end: >
+   patterns:
+    include: #types
+    include: #keywords
+  multi:
+   begin: \w+<
+   end: >
+   patterns:
+    include: #types
+    include: #keywords
+  multi:
+   begin: (#)\(
+   bcaps: 1=keyword.operator.tuple.kotlin
+   end: \)
+   patterns:
+    include: #expressions
+  multi:
+   begin: \{
+   end: \}
+   patterns:
+    include: #statements
+  multi:
+   begin: \(
+   end: \)
+   patterns:
+    include: #types
+  single:
+   name: keyword.operator.declaration.kotlin
+   pattern: (->)
+ variables:
+  multi:
+   begin: (?=\s*(?:var|val))
+   end: (?=:|=|$)
+   patterns:
+    multi:
+     begin: \b(var|val)\b
+     bcaps: 1=keyword.other.kotlin
+     end: (?=:|=|$)
+     patterns:
+      multi:
+       begin: <
+       end: >
+       patterns:
+        include: #generics
+      single:
+       pattern: ([\.<\?>\w]+\.)?(\w+)
+       caps: 2=entity.name.variable.kotlin
+    multi:
+     begin: (:)
+     bcaps: 1=keyword.operator.declaration.kotlin
+     end: (?==|$)
+     patterns:
+      include: #types
+      include: #getters-and-setters
+    multi:
+     begin: (=)
+     bcaps: 1=keyword.operator.assignment.kotlin
+     end: (?=$)
+     patterns:
+      include: #expressions
+      include: #getters-and-setters
+patterns:
+ include: #comments
+ single:
+  pattern: ^\s*(package)\b(?:\s*([^ ;$]+)\s*)?
+  caps: 1=keyword.other.kotlin 2=entity.name.package.kotlin
+ include: #imports
+ include: #statements

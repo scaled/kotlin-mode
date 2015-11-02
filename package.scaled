@@ -1,0 +1,10 @@
+   name: kotlin-mode
+ source: git:https://github.com/scaled/kotlin-mode.git
+version: 1.0
+descrip: Provides language support for Kotlin.
+ weburl: https://github.com/scaled/kotlin-mode
+license: New BSD
+ depend: git:https://github.com/scaled/textmate-grammar.git
+ depend: git:https://github.com/scaled/project-service.git
+ depend: mvn:org.jetbrains.kotlin:kotlin-stdlib:1.0.0-beta-1038
+ module: test
