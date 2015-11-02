@@ -55,11 +55,7 @@ class KotlinMode (env :Env) : GrammarCodeMode(env) {
 
     // map TextMate grammar scopes to Scaled style definitions
     val effacers = Std.list(
-      // Kotlin code colorizations
-      GrammarConfig.effacer("entity.name.package", moduleStyle()),
-      GrammarConfig.effacer("entity.name.type.class", typeStyle()),
-
-      // Java code colorizations
+      // Standard code colorizations
       GrammarConfig.effacer("comment.line", commentStyle()),
       GrammarConfig.effacer("comment.block", docStyle()),
       GrammarConfig.effacer("constant", constantStyle()),
@@ -67,28 +63,20 @@ class KotlinMode (env :Env) : GrammarCodeMode(env) {
       GrammarConfig.effacer("keyword", keywordStyle()),
       GrammarConfig.effacer("string", stringStyle()),
 
-      GrammarConfig.effacer("storage.type.java", typeStyle()), // TODO: handle match-specificity (drop .java)
-      GrammarConfig.effacer("storage.type.generic", typeStyle()),
-      GrammarConfig.effacer("storage.type.primitive", typeStyle()),
-      GrammarConfig.effacer("storage.type.object", typeStyle()), // meh, colors array []s same as type...
-      GrammarConfig.effacer("storage.type.annotation", preprocessorStyle()),
-      GrammarConfig.effacer("storage.modifier.java", keywordStyle()),
-      GrammarConfig.effacer("storage.modifier.extends", keywordStyle()),
-      GrammarConfig.effacer("storage.modifier.implements", keywordStyle()),
-      GrammarConfig.effacer("storage.modifier.import", typeStyle()),
-
+      // Kotlin code colorizations
+      GrammarConfig.effacer("entity.name.package", moduleStyle()),
+      GrammarConfig.effacer("entity.name.type.class", typeStyle()),
+      GrammarConfig.effacer("storage.modifier", keywordStyle()),
+      GrammarConfig.effacer("entity.name.function", functionStyle()),
+      GrammarConfig.effacer("entity.name.variable", variableStyle()),
+      GrammarConfig.effacer("storage.type", typeStyle()),
       GrammarConfig.effacer("entity.other.inherited-class", typeStyle()),
-      GrammarConfig.effacer("entity.name.function.java", functionStyle()),
 
-      GrammarConfig.effacer("variable.language", keywordStyle()),
-      GrammarConfig.effacer("variable.parameter", variableStyle()),
-      GrammarConfig.effacer("variable.other.type", variableStyle()),
+      // TODO
+      GrammarConfig.effacer("storage.type.annotation", preprocessorStyle()),
 
-      // Javadoc colorizations
+      // TODO: Doc colorizations
       GrammarConfig.effacer("markup.underline", preprocessorStyle()),
-
-      // HTML in Javadoc colorizations
-      GrammarConfig.effacer("entity.name.tag", constantStyle())
     )
 
     // map TextMate grammar scopes to Scaled syntax definitions

@@ -71,7 +71,7 @@ repository:
    end: \)
    patterns:
     include: #expressions
-  include: #types
+#  include: #types
   include: #strings
   include: #constants
   include: #comments
@@ -167,12 +167,12 @@ repository:
       include: #expressions
  imports:
   single:
-   pattern: ^\s*(import)\s+[^ $]+(\s+(as))?
-   caps: 1=keyword.other.kotlin 3=keyword.other.kotlin
+   pattern: ^\s*(import)\s+([^ $]+)(\s+(as))?
+   caps: 1=keyword.other.kotlin 2=entity.name.package.kotlin 4=keyword.other.kotlin
  keywords:
   single:
    name: storage.modifier.kotlin
-   pattern: \b(var|val|public|private|protected|abstract|final|enum|open|attribute|annotation|override|inline|var|val|vararg|lazy|in|out|ref|internal|data)\b
+   pattern: \b(var|val|public|private|protected|abstract|final|enum|open|attribute|annotation|override|inline|vararg|lazy|in|out|ref|internal|data)\b
   single:
    name: keyword.control.catch-exception.kotlin
    pattern: \b(try|catch|finally|throw)\b
@@ -209,15 +209,6 @@ repository:
   single:
    name: punctuation.terminator.kotlin
    pattern: (;)
- namespaces:
-  single:
-   name: keyword.other.kotlin
-   pattern: \b(namespace)\b
-  multi:
-   begin: \{
-   end: \}
-   patterns:
-    include: #statements
  parameters:
   multi:
    begin: (:)
@@ -236,7 +227,6 @@ repository:
    name: variable.parameter.function.kotlin
    pattern: \w+
  statements:
-  include: #namespaces
   include: #typedefs
   include: #classes
   include: #functions
@@ -302,14 +292,14 @@ repository:
     include: #expressions
  types:
   single:
-   name: storage.type.buildin.kotlin
+   name: storage.type.builtin.kotlin
    pattern: \b(Any|Unit|String|Int|Boolean|Char|Long|Double|Float|Short|Byte)\b
   single:
-   name: storage.type.buildin.array.kotlin
+   name: storage.type.builtin.array.kotlin
    pattern: \b(IntArray|BooleanArray|CharArray|LongArray|DoubleArray|FloatArray|ShortArray|ByteArray)\b
   multi:
    begin: \b(Array|List|Map)<\b
-   bcaps: 1=storage.type.buildin.collection.kotlin
+   bcaps: 1=storage.type.builtin.collection.kotlin
    end: >
    patterns:
     include: #types
@@ -326,16 +316,19 @@ repository:
    end: \)
    patterns:
     include: #expressions
-  multi:
-   begin: \{
-   end: \}
-   patterns:
-    include: #statements
+#  multi:
+#   begin: \{
+#   end: \}
+#   patterns:
+#    include: #statements
   multi:
    begin: \(
    end: \)
    patterns:
     include: #types
+  single:
+   name: storage.type.nominal.kotlin
+   pattern: \b\w+\b
   single:
    name: keyword.operator.declaration.kotlin
    pattern: (->)
@@ -372,9 +365,10 @@ repository:
       include: #expressions
       include: #getters-and-setters
 patterns:
- include: #comments
  single:
   pattern: ^\s*(package)\b(?:\s*([^ ;$]+)\s*)?
   caps: 1=keyword.other.kotlin 2=entity.name.package.kotlin
  include: #imports
+ include: #comments
+ include: #keywords
  include: #statements
