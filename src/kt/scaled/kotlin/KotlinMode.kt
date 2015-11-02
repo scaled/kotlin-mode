@@ -76,7 +76,7 @@ class KotlinMode (env :Env) : GrammarCodeMode(env) {
       GrammarConfig.effacer("storage.type.annotation", preprocessorStyle()),
 
       // TODO: Doc colorizations
-      GrammarConfig.effacer("markup.underline", preprocessorStyle()),
+      GrammarConfig.effacer("markup.underline", preprocessorStyle())
     )
 
     // map TextMate grammar scopes to Scaled syntax definitions

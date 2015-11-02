@@ -123,7 +123,9 @@ repository:
    end: (?=,|>)
    patterns:
     include: #types
-  include: #keywords
+  single:
+   name: storage.modifier.kotlin
+   pattern: \b(in|out)\b
   single:
    name: storage.type.generic.kotlin
    pattern: \w+
@@ -172,7 +174,10 @@ repository:
  keywords:
   single:
    name: storage.modifier.kotlin
-   pattern: \b(var|val|public|private|protected|abstract|final|enum|open|attribute|annotation|override|inline|vararg|lazy|in|out|ref|internal|data)\b
+   pattern: \b(var|val|public|private|protected|abstract|final|attribute|override|inline|vararg|lazy|ref|internal)\b
+  single:
+   name: keyword.class.modifier.kotlin
+   pattern: \b(enum|open|inner|annotation|data)\b
   single:
    name: keyword.control.catch-exception.kotlin
    pattern: \b(try|catch|finally|throw)\b
@@ -305,11 +310,12 @@ repository:
     include: #types
     include: #keywords
   multi:
-   begin: \w+<
+   begin: (\w+)<
+   bcaps: 1=storage.type.nominal.kotlin
    end: >
    patterns:
     include: #types
-    include: #keywords
+#    include: #keywords
   multi:
    begin: (#)\(
    bcaps: 1=keyword.operator.tuple.kotlin
