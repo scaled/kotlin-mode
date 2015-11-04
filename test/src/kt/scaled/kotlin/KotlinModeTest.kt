@@ -53,7 +53,11 @@ class KotlinModeTest {
     val scoper = Scoper(grammars, buffer, Std.list(Selector.Processor(KotlinMode.effacers)))
     // println(scoper.showMatchers(Set("#code", "#class")))
     scoper.rethinkBuffer()
-    for (ll in 0..buffer.lines().length()-1) for (s in scoper.showScopes(ll)) { println("$ll: $s") }
+    for (ll in 0..buffer.lines().length()-1) {
+      println("$ll: ${buffer.line(ll)}")
+      println("    " + buffer.line(ll).lineTags())
+      for (s in scoper.showScopes(ll)) { println("    $s") }
+    }
     // assertTrue("@link contents scoped as link",
     //            scoper.scopesAt(Loc.apply(3, 61)).contains("markup.underline.link.javadoc"))
     // assertEquals("@link contents styled as link",
