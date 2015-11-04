@@ -45,7 +45,16 @@ class KotlinIndenter (buffer :Buffer, config: Config) : Indenter.ByBlock(buffer,
 
     override fun adjustEnd (line :LineV, first :Int, last :Int, start :State, cur :State) :State {
       // if this line closes a doc/block comment, pop our comment state from the stack
-      val ncur = if (Indenter.countComments(line, first) < 0) cur.popIf { it is CommentS } else cur
+      var end = if (Indenter.countComments(line, first) < 0) cur.popIf { it is CommentS } else cur
+
+      // if the top of the stack is a BlockS but the end of the line is => then we're in a lambda
+      // and need to adjust the BlockS to let it know that it actually should trigger indent
+      if (end is BlockS) {
+        val arrowStart = last+1-lambdaArrowM.show().length
+        if (arrowStart >= 0 && line.matches(lambdaArrowM, arrowStart)) {
+          end = end.makeEOL()
+        }
+      }
 
       // // determine whether this line is continued onto the next line (heuristically)
       // if (last >= 0) {
@@ -62,7 +71,7 @@ class KotlinIndenter (buffer :Buffer, config: Config) : Indenter.ByBlock(buffer,
       // }
 
       // otherwise we are full of normalcy
-      return ncur
+      return end
     }
 
     override fun closeBlock (line :LineV, close :Char, col :Int, state :State) :State {
@@ -97,4 +106,5 @@ class KotlinIndenter (buffer :Buffer, config: Config) : Indenter.ByBlock(buffer,
   // private final Matcher switchM = Matcher.regexp("switch\\b")
 
   private val firstLineDocM = Matcher.regexp("/\\*\\*\\s*\\S+")
+  private val lambdaArrowM  = Matcher.exact(" ->")
 }
