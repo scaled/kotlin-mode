@@ -30,7 +30,7 @@ repository:
     multi:
      begin: (:)
      bcaps: 1=keyword.operator.declaration.kotlin
-     end: (?=[{$])
+     end: (?=[{]|$)
      patterns:
       single:
        name: entity.other.inherited-class.kotlin
@@ -102,7 +102,7 @@ repository:
     multi:
      begin: (:)
      bcaps: 1=keyword.operator.declaration.kotlin
-     end: (?=[{=$])
+     end: (?=[{=]|$)
      patterns:
       include: #types
     multi:
