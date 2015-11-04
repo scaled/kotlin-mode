@@ -307,15 +307,13 @@ repository:
    bcaps: 1=storage.type.builtin.collection.kotlin
    end: >
    patterns:
-    include: #types
-    include: #keywords
+    include: #generics
   multi:
    begin: (\w+)<
    bcaps: 1=storage.type.nominal.kotlin
    end: >
    patterns:
-    include: #types
-#    include: #keywords
+    include: #generics
   multi:
    begin: (#)\(
    bcaps: 1=keyword.operator.tuple.kotlin
