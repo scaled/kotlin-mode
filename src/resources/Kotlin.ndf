@@ -3,11 +3,11 @@ scopeName: source.Kotlin
 repository:
  classes:
   multi:
-   begin: (?=\s*(?:companion|class|object|trait))
+   begin: (?=\s*(?:companion|class|object|interface))
    end: }|(?=$)
    patterns:
     multi:
-     begin: \b(companion\s+)?(class|object|trait)\b
+     begin: \b(companion\s+)?(class|object|interface)\b
      bcaps: 1=keyword.other.kotlin 2=keyword.other.kotlin
      end: (?=[<{(:])
      patterns:
