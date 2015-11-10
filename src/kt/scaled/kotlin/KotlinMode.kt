@@ -71,6 +71,7 @@ class KotlinMode (env :Env) : GrammarCodeMode(env) {
       GrammarConfig.effacer("entity.name.variable", variableStyle()),
       GrammarConfig.effacer("storage.type", typeStyle()),
       GrammarConfig.effacer("entity.other.inherited-class", typeStyle()),
+      GrammarConfig.effacer("keyword.control.flow", functionStyle()), // highlight these
 
       // TODO
       GrammarConfig.effacer("storage.type.annotation", preprocessorStyle()),

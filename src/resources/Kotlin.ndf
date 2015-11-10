@@ -182,8 +182,11 @@ repository:
    name: keyword.control.catch-exception.kotlin
    pattern: \b(try|catch|finally|throw)\b
   single:
-   name: keyword.control.kotlin
-   pattern: \b(if|then|else|while|for|do|return|when|where|break|continue)\b
+   name: keyword.control.conditional.kotlin
+   pattern: \b(if|then|else|while|for|do|when|where)\b
+  single:
+   name: keyword.control.flow.kotlin
+   pattern: \b(return|break|continue)\b
   single:
    name: keyword.operator.kotlin
    pattern: \b(in|is|as|assert)\b
