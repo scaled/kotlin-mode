@@ -231,6 +231,7 @@ repository:
    patterns:
     include: #expressions
   include: #keywords
+  include: #comments
   single:
    name: variable.parameter.function.kotlin
    pattern: \w+
