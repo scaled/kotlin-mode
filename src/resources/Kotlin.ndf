@@ -361,12 +361,12 @@ repository:
     multi:
      begin: (:)
      bcaps: 1=keyword.operator.declaration.kotlin
-     end: (?==|$)
+     end: (?==|\s|$)
      patterns:
       include: #types
       include: #getters-and-setters
     multi:
-     begin: (=)
+     begin: (=|by)
      bcaps: 1=keyword.operator.assignment.kotlin
      end: (?=$)
      patterns:
