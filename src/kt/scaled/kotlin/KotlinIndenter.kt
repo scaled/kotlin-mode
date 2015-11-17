@@ -118,7 +118,7 @@ class KotlinIndenter (buffer :Buffer, config: Config) : Indenter.ByBlock(buffer,
       // return if (close == '}' && popped is SwitchS) popped.next() else  popped
     }
 
-    protected val contChars = ".+-="
+    protected val contChars = ".+-=:"
   }
 
   protected class CommentS (val inset :Int, next :State) : Indenter.State(next) {
