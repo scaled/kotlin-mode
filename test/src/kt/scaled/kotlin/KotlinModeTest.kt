@@ -52,6 +52,30 @@ class KotlinModeTest {
     val buffer = BufferImpl.apply(TextStore("Test.kt", "", testCode))
     val scoper = Scoper(grammars, buffer, Std.list(Selector.Processor(KotlinMode.effacers)))
     // println(scoper.showMatchers(Set("#code", "#class")))
+
+    // scoper.rethinkBuffer()
+    // for (ll in 0..buffer.lines().length()-1) {
+    //   println("$ll: ${buffer.line(ll)}")
+    //   println("    " + buffer.line(ll).lineTags())
+    //   for (s in scoper.showScopes(ll)) { println("    $s") }
+    // }
+
+    // assertTrue("@link contents scoped as link",
+    //            scoper.scopesAt(Loc.apply(3, 61)).contains("markup.underline.link.javadoc"))
+    // assertEquals("@link contents styled as link",
+    //              Std.list(CodeConfig.preprocessorStyle()), buffer.stylesAt(Loc.apply(3, 61)))
+  }
+
+  val scratchCode = Std.seq(
+    //                1         2         3         4         5         6         7         8
+    //      012345678901234567890123456789012345678901234567890123456789012345678901234567890123456
+    /* 0*/ "fun foo () {",
+    /* 1*/ "  bar.get() // bingle",
+    /* 2*/ "}").mkString("\n")
+
+  @Test fun testScratchCode () {
+    val buffer = BufferImpl.apply(TextStore("Test.kt", "", scratchCode))
+    val scoper = Scoper(grammars, buffer, Std.list(Selector.Processor(KotlinMode.effacers)))
     scoper.rethinkBuffer()
     for (ll in 0..buffer.lines().length()-1) {
       println("$ll: ${buffer.line(ll)}")
