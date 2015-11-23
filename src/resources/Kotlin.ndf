@@ -131,7 +131,7 @@ repository:
    pattern: \w+
  getters-and-setters:
   multi:
-   begin: \b(get)\b\s*\(\s*\)
+   begin: \s\b(get)\b\s*\(\s*\)
    bcaps: 1=entity.name.function.kotlin
    end: \}|(?=\bset\b)|$
    patterns:
@@ -147,7 +147,7 @@ repository:
      patterns:
       include: #expressions
   multi:
-   begin: \b(set)\b\s*(?=\()
+   begin: \s\b(set)\b\s*(?=\()
    bcaps: 1=entity.name.function.kotlin
    end: \}|(?=\bget\b)|$
    patterns:
