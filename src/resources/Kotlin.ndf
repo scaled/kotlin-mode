@@ -3,7 +3,7 @@ scopeName: source.Kotlin
 repository:
  classes:
   multi:
-   begin: (?=\s*(?:companion|class|object|interface))
+   begin: (?=(?<!\S)(?:companion|class|object|interface))
    end: }|(?=$)
    patterns:
     multi:
