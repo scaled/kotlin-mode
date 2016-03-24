@@ -8,7 +8,7 @@ import scaled.*
 import scaled.code.Indenter
 import scaled.util.Chars
 
-class KotlinIndenter (buffer :Buffer, config: Config) : Indenter.ByBlock(buffer, config) {
+class KotlinIndenter (config: Config) : Indenter.ByBlock(config) {
 
   // TODO: make all the things configurable
 

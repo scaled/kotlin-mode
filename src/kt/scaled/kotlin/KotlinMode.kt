@@ -28,7 +28,7 @@ class KotlinMode (env :Env) : GrammarCodeMode(env) {
   override fun effacers () = Companion.effacers
   override fun syntaxers () = Companion.syntaxers
 
-  override fun createIndenter () = KotlinIndenter(buffer(), config())
+  override fun createIndenter () = KotlinIndenter(config())
 
   // TODO: val
   override fun commenter () = KotlinCommenter()
