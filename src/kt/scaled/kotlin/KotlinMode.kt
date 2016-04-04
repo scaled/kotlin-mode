@@ -14,6 +14,7 @@ import scaled.grammar.Grammar
 import scaled.grammar.GrammarCodeMode
 import scaled.grammar.GrammarConfig
 import scaled.grammar.Selector
+import scaled.util.Paragrapher
 
 @Major(name="kotlin",
        tags=arrayOf("code", "project", "kotlin"),
@@ -75,20 +76,28 @@ class KotlinMode (env :Env) : GrammarCodeMode(env) {
   override fun createIndenter () = KotlinIndenter(config())
 
   // TODO: val
-  override fun commenter () = KotlinCommenter()
+  override fun commenter () = object : Commenter() {
+    val atCmdM = Matcher.regexp("@[a-z]+")
 
-  //
-  // FNs
+    override fun linePrefix () = "//"
+    override fun blockOpen () = "/*"
+    override fun blockClose () = "*/"
+    override fun blockPrefix () = "*"
+    override fun docOpen () = "/**"
 
-  override fun electricNewline () {
-    // shenanigans to determine whether we should auto-insert the doc prefix (* )
-    if (commenter().inDoc(buffer(), view().point().get().rowCol())) {
-      newline()
-      val np = view().point().get()
-      if (buffer().charAt(np.rowCol()) != '*') {
-        view().point().update(Loc(commenter().insertDocPre(buffer(), np.rowCol())))
+    override fun mkParagrapher (syn :Syntax, buf :Buffer) :Paragrapher {
+      return object : Paragrapher(syn, buf) {
+        fun isAtCmdLine (line :LineV) = line.matches(atCmdM, commentStart(line))
+        // don't extend paragraph upwards if the current top is an @cmd
+        override fun canPrepend (row :Int) = super.canPrepend(row) && !isAtCmdLine(line(row+1))
+        // don't extend paragraph downwards if the new line is at an @cmd
+        override fun canAppend (row :Int) = super.canAppend(row) && !isAtCmdLine(line(row))
+        // have to duplicate this due to kotlinc bug re: inheriting from inner class
+        override fun isDelim (row :Int) :Boolean {
+          val l = line(row)
+          return commentStart(l) == l.length
+        }
       }
-      reindentAtPoint()
-    } else super.electricNewline()
+    }
   }
 }
