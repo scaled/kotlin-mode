@@ -22,34 +22,7 @@ import scaled.grammar.Selector
        desc="A major mode for editing Kotlin language source code.")
 class KotlinMode (env :Env) : GrammarCodeMode(env) {
 
-  override fun configDefs () :List<Config.Defs>? = super.configDefs().cons(Companion)
-
-  override fun grammars () = Companion.grammars.get()
-  override fun effacers () = Companion.effacers
-  override fun syntaxers () = Companion.syntaxers
-
-  override fun createIndenter () = KotlinIndenter(config())
-
-  // TODO: val
-  override fun commenter () = KotlinCommenter()
-
-  //
-  // FNs
-
-  override fun electricNewline () {
-    // shenanigans to determine whether we should auto-insert the doc prefix (* )
-    if (commenter().inDoc(buffer(), view().point().get().rowCol())) {
-      newline()
-      val np = view().point().get()
-      if (buffer().charAt(np.rowCol()) != '*') {
-        view().point().update(Loc(commenter().insertDocPre(buffer(), np.rowCol())))
-      }
-      reindentAtPoint()
-    } else super.electricNewline()
-  }
-
   companion object : Config.Defs() {
-
     @Var("If true, switch blocks are indented one step.")
     val indentSwitchBlock = key(false)
 
@@ -91,5 +64,31 @@ class KotlinMode (env :Env) : GrammarCodeMode(env) {
     val grammars = resource(Std.seq("Kotlin.ndf"), Grammar.parseNDFs())
 
     // override fun key (p0: kotlin.Boolean) = super.key(p0 as java.lang.Boolean)
+  }
+
+  override fun configDefs () :List<Config.Defs>? = super.configDefs().cons(Companion)
+
+  override fun grammars () = Companion.grammars.get()
+  override fun effacers () = Companion.effacers
+  override fun syntaxers () = Companion.syntaxers
+
+  override fun createIndenter () = KotlinIndenter(config())
+
+  // TODO: val
+  override fun commenter () = KotlinCommenter()
+
+  //
+  // FNs
+
+  override fun electricNewline () {
+    // shenanigans to determine whether we should auto-insert the doc prefix (* )
+    if (commenter().inDoc(buffer(), view().point().get().rowCol())) {
+      newline()
+      val np = view().point().get()
+      if (buffer().charAt(np.rowCol()) != '*') {
+        view().point().update(Loc(commenter().insertDocPre(buffer(), np.rowCol())))
+      }
+      reindentAtPoint()
+    } else super.electricNewline()
   }
 }
