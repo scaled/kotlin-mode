@@ -1,8 +1,8 @@
 //
-// Scaled Scala Mode - a Scaled major mode for editing Scala code
-// http://github.com/scaled/scala-mode/blob/master/LICENSE
+// Scaled Kotlin Mode - a Scaled major mode for editing Kotlin code
+// http://github.com/scaled/kotlin-mode/blob/master/LICENSE
 
-package scaled.scala
+package scaled.kotlin
 
 import codex.model.Def
 import codex.model.Kind
@@ -13,7 +13,7 @@ import scaled.util.Errors
 @Minor(name="codex-kotlin",
        tags=arrayOf("kotlin"),
        desc="A minor mode which enhances Kotlin mode with Codex information.")
-class CodexScalaMode (env :Env) : CodexMinorMode(env) {
+class CodexKotlinMode (env :Env) : CodexMinorMode(env) {
 
   override fun keymap () = super.keymap().
     bind("codex-import-type", "C-c C-i")
