@@ -82,7 +82,5 @@ class KotlinMode (env :Env) : GrammarCodeMode(env) {
     override fun blockClose () = "*/"
     override fun blockPrefix () = "*"
     override fun docOpen () = "/**"
-
-    override fun mkParagrapher (syn :Syntax, buf :Buffer) = DocCommentParagrapher(syn, buf)
   }
 }
