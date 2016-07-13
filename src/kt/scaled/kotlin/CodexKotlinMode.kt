@@ -7,11 +7,11 @@ package scaled.kotlin
 import codex.model.Def
 import codex.model.Kind
 import scaled.*
-import scaled.project.CodexMinorMode
+import scaled.project.*
 import scaled.util.Errors
 
 @Minor(name="codex-kotlin",
-       tags=arrayOf("kotlin"),
+       tags=arrayOf("kotlin"), stateTypes=arrayOf(Project::class),
        desc="A minor mode which enhances Kotlin mode with Codex information.")
 class CodexKotlinMode (env :Env) : CodexMinorMode(env) {
 
