@@ -19,7 +19,7 @@ import scaled.util.Paragrapher
 @Major(name="kotlin",
        tags=arrayOf("code", "project", "kotlin"),
        pats=arrayOf(".*\\.kt"),
-       ints=arrayOf("kotlin"),
+       ints=arrayOf("kotlin", "kotlins"),
        desc="A major mode for editing Kotlin language source code.")
 class KotlinMode (env :Env) : GrammarCodeMode(env) {
 
