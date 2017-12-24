@@ -40,9 +40,9 @@ class KotlinModeTest {
     /*20*/ "   fun test (count :Int) {}",
     /*21*/ "}").mkString("\n")
 
-  fun rsrc (path :String) = KotlinMode::class.java.getClassLoader().getResourceAsStream(path)
+  fun rsrc (path :String) = KotlinMode::class.java.getClassLoader().getResource(path)
   fun kotlin () = rsrc("Kotlin.ndf")
-  val grammars = Grammar.Set(Std.seq(Grammar.parseNDF(kotlin())))
+  val grammars = Std.seq(Grammar.parseNDF(kotlin()))
 
   // @Test fun dumpGrammar () {
   //   Grammar.parseNDF(kotlin()).print(System.out)
@@ -50,7 +50,8 @@ class KotlinModeTest {
 
   @Test fun testStylesLink () {
     val buffer = BufferImpl.apply(TextStore("Test.kt", "", testCode))
-    val scoper = Scoper(grammars, buffer, Std.list(Selector.Processor(KotlinMode.effacers)))
+    val scoper = Grammar.testScoper(
+      grammars, buffer, Std.list(Selector.Processor(KotlinGrammarPlugin().effacers())))
     // println(scoper.showMatchers(Set("#code", "#class")))
 
     // scoper.rethinkBuffer()
@@ -75,7 +76,8 @@ class KotlinModeTest {
 
   @Test fun testScratchCode () {
     val buffer = BufferImpl.apply(TextStore("Test.kt", "", scratchCode))
-    val scoper = Scoper(grammars, buffer, Std.list(Selector.Processor(KotlinMode.effacers)))
+    val scoper = Grammar.testScoper(
+      grammars, buffer, Std.list(Selector.Processor(KotlinGrammarPlugin().effacers())))
     scoper.rethinkBuffer()
     for (ll in 0..buffer.lines().length()-1) {
       println("$ll: ${buffer.line(ll)}")
