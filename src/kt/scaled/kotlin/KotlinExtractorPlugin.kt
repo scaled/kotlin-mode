@@ -6,12 +6,12 @@ package scaled.project
 
 import codex.extract.Extractor
 import codex.extract.TokenExtractor
-import scaled._
+import scaled.*
 
 @Plugin(tag="codex-extractor")
-class KotlinExtractorPlugin extends ExtractorPlugin {
+class KotlinExtractorPlugin : ExtractorPlugin() {
 
-  override val suffs = Set("kt")
+  override fun suffs () = Std.set("kt")
 
-  override def extractor (project :Project, suff :String) = Some(new TokenExtractor())
+  override fun extractor (project :Project, suff :String) = Option.some<Extractor>(TokenExtractor())
 }
