@@ -45,7 +45,7 @@ abstract class KotlinCompiler (proj :Project, val java :JavaComponent) : Compile
   }
 
   override fun compile (buffer :Buffer, file :Option<Path>) =
-    compile(buffer, file, project().sourceDirs(), java.buildClasspath(), java.outputDir())
+    compile(buffer, file, project().sources().dirs(), java.buildClasspath(), java.outputDir())
 
   override fun nextNote (buffer :Buffer, start :Long) :Compiler.NoteLoc {
     val ploc = buffer.findForward(outputM, start, buffer.end())
