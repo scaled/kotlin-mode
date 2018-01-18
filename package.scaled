@@ -7,5 +7,5 @@ license: New BSD
  depend: git:https://github.com/scaled/textmate-grammar.git
  depend: git:https://github.com/scaled/project-service.git
  depend: git:https://github.com/scaled/java-mode.git
- depend: mvn:org.jetbrains.kotlin:kotlin-stdlib:1.2.10
+ depend: mvn:org.jetbrains.kotlin:kotlin-stdlib:1.2.20
  module: test
