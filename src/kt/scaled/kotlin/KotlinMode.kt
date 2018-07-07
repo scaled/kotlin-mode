@@ -7,7 +7,7 @@ package scaled.kotlin
 import scaled.*
 import scaled.List
 import scaled.code.Commenter
-import scaled.code.Indenter
+import scaled.code.BlockIndenter
 import scaled.grammar.GrammarCodeMode
 
 @Major(name="kotlin",
@@ -26,7 +26,21 @@ class KotlinMode (env :Env) : GrammarCodeMode(env) {
 
   override fun configDefs () :List<Config.Defs>? = super.configDefs().cons(Companion)
   override fun langScope () = "source.kotlin"
-  override fun createIndenter () = KotlinIndenter(config())
+
+  override fun createIndenter () = BlockIndenter(config(), Std.seq(
+    // bump extends/implements in two indentation levels
+    BlockIndenter.adjustIndentWhenMatchStart(Matcher.regexp("(extends|implements)\\b"), 2),
+    // align changed method calls under their dot
+    BlockIndenter.AlignUnderDotRule(),
+    // handle javadoc and block comments
+    BlockIndenter.BlockCommentRule(),
+    // handle indenting switch statements properly
+    BlockIndenter.SwitchRule(),
+    // handle continued statements, with some special sauce for : after case
+    BlockIndenter.CLikeContStmtRule(),
+    // handle indenting lambda blocks properly
+    BlockIndenter.LambdaBlockRule(" =>")
+  ))
 
   // TODO: val
   override fun commenter () = object : Commenter() {
