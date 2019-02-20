@@ -32,6 +32,9 @@ abstract class KotlinCompiler (proj :Project, val java :JavaComponent) : Compile
   /** The module name to supply to the kotlin compiler. */
   open fun moduleName () :Option<String> = Option.none()
 
+  /** The directory into which class files should be written. */
+  abstract fun outputDir () :Path
+
   val log = project().metaSvc().log()
 
   // override fun reset () {} // NOOP!
@@ -45,7 +48,7 @@ abstract class KotlinCompiler (proj :Project, val java :JavaComponent) : Compile
   }
 
   override fun compile (buffer :Buffer, file :Option<Path>) =
-    compile(buffer, file, project().sources().dirs(), java.buildClasspath(), java.outputDir())
+    compile(buffer, file, project().sources().dirs(), java.buildClasspath(), outputDir())
 
   override fun nextNote (buffer :Buffer, start :Long) :Compiler.NoteLoc {
     val ploc = buffer.findForward(outputM, start, buffer.end())
@@ -80,8 +83,8 @@ abstract class KotlinCompiler (proj :Project, val java :JavaComponent) : Compile
                          classpath :SeqV<Path>, output :Path) :Future<Any> {
     // if we're not doing an incremental recompile, clean the output dir first
     if (!file.isDefined) {
-      Filez.deleteAll(java.outputDir())
-      Files.createDirectories(java.outputDir())
+      Filez.deleteAll(outputDir())
+      Files.createDirectories(outputDir())
     }
 
     // now call down to the project which may copy things back into the output dir
